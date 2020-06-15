@@ -6,7 +6,8 @@
 # libraries.  If you use an external library, be sure to include it
 # in the requirements.txt file so the library is installed properly
 # when the skill gets installed later by a user.
-
+import schedule
+from datetime import datetime
 from adapt.intent import IntentBuilder
 from mycroft.skills.core import MycroftSkill, intent_handler
 from mycroft.util.log import LOG
@@ -23,6 +24,12 @@ class HelpSkill(MycroftSkill):
         
         # Initialize working variables used within the skill.
         self.count = 0
+
+        # Calls function every day at 8 am
+        schedule.every().day.at("08:00").do(self.say_Good_Morning)
+
+        # Calls function every day at 8 pm
+        schedule.every().day.at("20:00").do(self.say_Good_Night)
 
     # The "handle_xxxx_intent" function is triggered by Mycroft when the
     # skill's intent is matched.  The intent is defined by the IntentBuilder()
@@ -49,6 +56,31 @@ class HelpSkill(MycroftSkill):
         else:  # assume "down"
             self.count -= 1
         self.speak_dialog("count.is.now", data={"count": self.count})
+    
+    @intent_handler(IntentBuilder("").require("Help"))
+    def handle_help_intent(self, message):
+        # Handle  Help Call
+        pass
+
+    @intent_handler(IntentBuilder("").require("Good"))
+    def handle_pos_res_intent(self, message):
+        # Handle Positive Respones
+        # Make Robot Smile
+        pass
+
+    @intent_handler(IntentBuilder("").require("Bad"))
+    def handle_neg_res_intent(self, message):
+        # Handle Help Call
+        # Make Robot Sad 
+        pass
+
+    def say_Good_Morning(self):
+        self.speak_dialog("hello.world")
+        self.speak_dialog("how.are.you")
+
+    def say_Good_Night(self):
+        self.speak_dialog("good.night")
+        # Here comes the photo part
 
     # The "stop" method defines what Mycroft does when told to stop during
     # the skill's execution. In this case, since the skill's functionality
