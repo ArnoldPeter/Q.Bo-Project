@@ -4,9 +4,6 @@ import os
 import schedule
 import time
 
-schedule.every().day.at("15:20").do(MakePicture)
-
-
 def MakePicture():
     cam = cv2.VideoCapture(0)
     # 3 =  Enum for Picture Width
@@ -41,5 +38,12 @@ def MakePicture():
                 print('An error has occured! Image hasnt been stored ! ')
             cv2.destroyAllWindows()
 
+schedule.every().day.at("15:23").do(MakePicture)
+#schedule.every().day.at("9:00").do(MakePicture)
+#schedule.every().day.at("18:30").do(MakePicture)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
 
         
