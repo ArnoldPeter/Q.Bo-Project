@@ -40,15 +40,23 @@ import time
 def MakePicture():
     config = yaml.safe_load(open("/opt/qbo/config.yml"))
     cam = cv2.VideoCapture(int(config['config.yml']))
+    #Set Camera Width on 320
     cam.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 320) 
+    #Set Camera Hight on 240
     cam.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 240)
     if cam.isOpened():
+        #Read Frame/take Picture
         _, frame = cam.read()
+        #Get current Time
         now = datetime.now()
+        #Get FileName from current Time
         file_name = now.strftime("%m_%d_%Y.%H_%M_%S") + ".jpg"
+        #Release camera
         cam.release()
+        #Write frame into file
         cv2.imwrite(file_name,frame)
         #Email file to "qbo.prototyp@gmail.com"
         #when finished
         #os.remove(file_name)
+
 MakePicture()
