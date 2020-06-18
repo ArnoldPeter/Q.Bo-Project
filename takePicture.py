@@ -46,6 +46,7 @@ def MakePicture():
     cam.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 320) 
     #Set Camera Hight on 240
     cam.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 240)
+    #If camera is opened and ready
     if cam.isOpened():
         #Read Frame/take Picture
         _, frame = cam.read()
