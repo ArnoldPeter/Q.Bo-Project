@@ -58,8 +58,8 @@ def MakePicture():
         cam.release()
         #Write frame into file
         cv2.imwrite(file_name,frame)
-        #Email file to "qbo.prototyp@gmail.com"
-        #when finished
+        #Send Email file to "qbo.prototyp@gmail.com"
+        #when finished => 
         #os.remove(file_name)
 
 MakePicture()
