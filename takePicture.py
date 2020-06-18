@@ -44,7 +44,7 @@ def MakePicture():
     cam = cv2.VideoCapture(int(config['camera']))
     cam.set(3, 320) 
     cam.set(4, 240)
-    path = "/Tmp/"
+    path = "/tmp/"
     now = datetime.now()
     fullPath = path + now.strftime("%m_%d_%Y.%H_%M_%S") + ".jpg"
     if(os.path.exists(path)):
