@@ -38,7 +38,9 @@ import time
 #             cv2.destroyAllWindows()
 
 def MakePicture():
+    #Get config file
     config = yaml.safe_load(open("/opt/qbo/config.yml"))
+    #Set Camera and get Cameraindex from config 
     cam = cv2.VideoCapture(int(config['config.yml']))
     #Set Camera Width on 320
     cam.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 320) 
