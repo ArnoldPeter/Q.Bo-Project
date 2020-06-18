@@ -6,7 +6,7 @@ import yagmail
 class EmailSender:
     @staticmethod
     def SendMail(emailHost="smtp.gmail.com", emailPort=465, 
-    senderEmailAdress="helperbotdevacc@gmail.com", receivers= ["blabak72@gmail.com", "emre.rauhofer@gmail.com"],
+    senderEmailAdress="helperbotdevacc@gmail.com", receivers= ["104609@fhwn.ac.at"],
      appPassword="shevsscfesztaddu"):
         # In der finalen version lässt sich der email provider einstellen
         # In der finalen version lässt sich Username und Passwort einstellen
