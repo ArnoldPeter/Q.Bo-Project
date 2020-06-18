@@ -14,7 +14,8 @@ def MakePicture():
         _,frame = cam.read()
         now = datetime.now()
         cam.release()
-        imagepath = 'C:\Temp\Testing'
+        currentDirecotry = os.curdir
+        imagepath = currentDirecotry
         if(os.path.exists(imagepath)):
             print("Directory Exists!")
             file_name = now.strftime('%m_%d_%Y.%H_%M_%S') + '.jpg'
@@ -38,12 +39,4 @@ def MakePicture():
                 print('An error has occured! Image hasnt been stored ! ')
             cv2.destroyAllWindows()
 
-schedule.every().day.at("15:23").do(MakePicture)
-#schedule.every().day.at("9:00").do(MakePicture)
-#schedule.every().day.at("18:30").do(MakePicture)
-
-while True:
-    schedule.run_pending()
-    time.sleep(1)
-
-        
+MakePicture()
