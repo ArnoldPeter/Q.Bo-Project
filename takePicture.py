@@ -11,11 +11,10 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 
 def MakePicture():
-    # #Load config file
-    # config = yaml.safe_load(open("opt/qbo/config.yml"))
-    # #set camera and get camera index from config file
-    # cam = cv2.VideoCapture(int(config['camera']))
-    cam = cv2.VideoCapture(0)
+    #Load config file
+    config = yaml.safe_load(open("opt/qbo/config.yml"))
+    #set camera and get camera index from config file
+    cam = cv2.VideoCapture(int(config['camera']))
     #Set Camera Width on 320 pixels
     cam.set(3, 320) 
     #Set Camera Height on 240 pixels
