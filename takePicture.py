@@ -4,85 +4,62 @@ import os
 import schedule
 import time
 
-# def MakePicture():
-#     cam = cv2.VideoCapture(0)
-#     cam.set(3, 320) 
-#     cam.set(4, 240)
-#     if cam.isOpened():
-#         _,frame = cam.read()
-#         now = datetime.now()
-#         cam.release()
-#         currentDirectory = os.curdir()
-#         print(currentDirectory)
-#         imagepath = currentDirecotry + "\Images"
-#         print(imagepath)
-#         if(os.path.exists(imagepath)):
-#             print("Directory Exists!")
-#             file_name = now.strftime('%m_%d_%Y.%H_%M_%S') + '.jpg'
-#             os.chdir(imagepath)
-#             issaved = cv2.imwrite(file_name, frame)
-#             if issaved:
-#                 print("Image " + file_name + " stored in " + imagepath + "!")
-#             else:
-#                 print('An error has occured! Image hasnt been stored ! ')
-#             cv2.destroyAllWindows()
-#         else:
-#             print("Directory " + imagepath +" doesn't exist!")
-#             os.mkdir(imagepath)
-#             print("Directory " + imagepath +" has been made! ")
-#             file_name = now.strftime("%m_%d_%Y.%H_%M_%S") + ".jpg"
-#             os.chdir(imagepath)
-#             issaved = cv2.imwrite(file_name, frame)
-#             if issaved:
-#                 print("Image " + file_name + " stored in " + imagepath + "!")
-#             else:
-#                 print('An error has occured! Image hasnt been stored ! ')
-#             cv2.destroyAllWindows()
-
 def MakePicture():
+    #Load config file
     config = yaml.safe_load(open("opt/qbo/config.yml"))
+    #set camera and get camera index from config file
     cam = cv2.VideoCapture(int(config['camera']))
+    #Set Camera Width on 320 pixels
     cam.set(3, 320) 
+    #Set Camera Height on 240 pixels
     cam.set(4, 240)
-    path = "/tmp/"
+    #Path to be written to
+    path = "tmp/"
+    #Get current day time
     now = datetime.now()
-    fullPath = path + now.strftime("%m_%d_%Y.%H_%M_%S") + ".jpg"
+    #File name with the current time in the name
+    file_name = now.strftime("%m_%d_%Y.%H_%M_%S") + ".jpg"
+    #Full path with file and directory name
+    fullPath = path + file_name
+    #If Directory exists
     if(os.path.exists(path)):
-        print("Directory existed!")
+        print("Directory existed! ")
+        #Read a frame from the camera
         _, frame = cam.read()
+        print("Picture has been taken! ")
+        #Release the camera
         cam.release()
+        #Write image into the file
         cv2.imwrite(fullPath, frame)
-        print("Saved Picture!")
+        print("Image has been created! ")
+        #!
+        #Email the picture to qbo.prototyp@gmail.com 
+        #!
+        #Sleep as long as the email needs access to the picture
+        time.sleep(3)
+        #Delete the picture
+        os.remove(fullPath)
+        print("Picture deleted! ")
     else:
+        print("Directory does not exist! ")
+        #Create the wanted Directory
         os.mkdir(path)
+        print("Directory has been created! ")
+        #Read a frame from the camera
         _, frame = cam.read()
+        print("Picture has been taken! ")
+        #Release the camera
         cam.release()
+        #Write image into the file
         cv2.imwrite(fullPath, frame)
-
-
-# def MakePictureWithEmail():
-#     #Get config file
-#     config = yaml.safe_load(open("/opt/qbo/config.yml"))
-#     #Set Camera and get Cameraindex from config 
-#     cam = cv2.VideoCapture(int(config['config.yml']))
-#     #Set Camera Width on 320
-#     cam.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 320) 
-#     #Set Camera Hight on 240
-#     cam.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 240)
-#     #If camera is opened and ready
-#     if cam.isOpened():
-#         #Read Frame/take Picture
-#         _, frame = cam.read()
-#         #Get current Time
-#         now = datetime.now()
-#         #Get FileName from current Time
-#         file_name = now.strftime("%m_%d_%Y.%H_%M_%S") + ".jpg"
-#         #Release camera
-#         cam.release()
-#         #Write frame into file
-#         cv2.imwrite(file_name,frame)
-#         #Send Email file to "qbo.prototyp@gmail.com"
-#         #when finished => 
-#         #os.remove(file_name)
+        print("Image has been created! ")
+        #!
+        #Email the picture to qbo.prototyp@gmail.com 
+        #!
+        #Sleep as long as the email needs access to the picture
+        time.sleep(3)
+        #Delete the picture
+        os.remove(fullPath)
+        print("Picture deleted! ")
 
 MakePicture()
