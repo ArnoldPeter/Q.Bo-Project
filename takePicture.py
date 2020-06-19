@@ -3,14 +3,6 @@ from datetime import datetime
 import os
 import schedule
 import time
-<<<<<<< Updated upstream
-
-def MakePicture():
-    #Load config file
-    config = yaml.safe_load(open("opt/qbo/config.yml"))
-    #set camera and get camera index from config file
-    cam = cv2.VideoCapture(int(config['camera']))
-=======
 import smtplib
 from email import encoders
 from email.mime.base import MIMEBase
@@ -24,7 +16,6 @@ def MakePicture():
     # #set camera and get camera index from config file
     # cam = cv2.VideoCapture(int(config['camera']))
     cam = cv2.VideoCapture(0)
->>>>>>> Stashed changes
     #Set Camera Width on 320 pixels
     cam.set(3, 320) 
     #Set Camera Height on 240 pixels
@@ -48,15 +39,8 @@ def MakePicture():
         #Write image into the file
         cv2.imwrite(fullPath, frame)
         print("Image has been created! ")
-        #!
-<<<<<<< Updated upstream
-        #Email the picture to qbo.prototyp@gmail.com 
-=======
+        #Sends Mail to the drive
         SendMail(fullPath)
->>>>>>> Stashed changes
-        #!
-        #Sleep as long as the email needs access to the picture
-        time.sleep(3)
         #Delete the picture
         os.remove(fullPath)
         print("Picture deleted! ")
@@ -73,47 +57,54 @@ def MakePicture():
         #Write image into the file
         cv2.imwrite(fullPath, frame)
         print("Image has been created! ")
-        #!
-<<<<<<< Updated upstream
-        #Email the picture to qbo.prototyp@gmail.com 
-=======
+        #Sends Mail to the drive
         SendMail(fullPath)
->>>>>>> Stashed changes
-        #!
-        #Sleep as long as the email needs access to the picture
-        time.sleep(3)
         #Delete the picture
         os.remove(fullPath)
         print("Picture deleted! ")
 
-<<<<<<< Updated upstream
-=======
 def SendMail(fullpath):
-    gmail_user = 'qbo.prototyp@gmail.com'
-    gmail_pw = 'FHWN2700'
+    #Email user name
+    email_user = 'qbo.prototyp@gmx.at'
+    #email password
+    email_pw = 'FHWN2700'
+    #binary data of the to be sended picture
     img_data = open(fullpath, 'rb').read()
     print("Opened Picture")
+    #Create message
     msg = MIMEMultipart()
-    msg['Subject'] = 'Testing'
-    msg['From'] = 'qbo.prototyp@gmail.com'
+    #Get current daytime
+    now = datetime.now()
+    #Set the Subject to the current time
+    msg['Subject'] = now.strftime("%m_%d_%Y.%H_%M_%S")
+    #Set the email which the email is form
+    msg['From'] = 'qbo.prototyp@gmx.at'
+    #Set the email which the email goes to
     msg['To'] = 'qbo.prototyp@gmail.com'
     print("Header Created")
 
-    text = MIMEText("test")
+    #Create text in the email
+    text = MIMEText("Photo taken by the Q.Bo Robot at " + now.strftime("%m_%d_%Y.%H_%M_%S") + "local day time! ")
+    #Attach it to the email
     msg.attach(text)
     print("Image created!")
+    #Get the picture and attach it to the email
     image = MIMEImage(img_data, name=os.path.basename(fullpath))
     msg.attach(image)
 
-    print("Logging into Google! ")
-    s = smtplib.SMTP('smtp.gmail.com',587)
+    print("Logging into GMX! ")
+    #Get the smtp data of the email server
+    s = smtplib.SMTP('smtp.gmx.net',587)
     s.ehlo()
+    #connect to server
     s.starttls()
     s.ehlo()
-    s.login(gmail_user,gmail_pw)
-    s.send(From, To, msg.as_string())
+    #Login with the necessary email data
+    s.login(email_user,email_pw)
+    #Send the mail
+    s.sendmail('qbo.prototyp@gmx.at','qbo.prototyp@gmail.com',msg.as_string())
+    #Quit the mailwriting
     s.quit
     print("Sent!")
 
->>>>>>> Stashed changes
 MakePicture()
