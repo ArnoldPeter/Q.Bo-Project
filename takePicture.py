@@ -83,7 +83,7 @@ def SendMail(fullpath):
     print("Header Created")
 
     #Create text in the email
-    text = MIMEText("Photo taken by the Q.Bo Robot at " + now.strftime("%m_%d_%Y.%H_%M_%S") + "local day time! ")
+    text = MIMEText("Photo taken by the Q.Bo Robot at " + now.strftime("%m_%d_%Y.%H_%M_%S") + " local day time! ")
     #Attach it to the email
     msg.attach(text)
     print("Image created!")
