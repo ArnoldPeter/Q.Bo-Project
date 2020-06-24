@@ -1,19 +1,18 @@
-import cv2
-import yaml
-from datetime import datetime
+import time
+import serial
+from controller.QboController import Controller
 
-config = yaml.safe_load(open("/opt/qbo/config.yml"))
+port = '/dev/serial0'
+ser = serial.Serial(port, baudrate=115200, bytesize = serial.EIGHTBITS, stopbits = serial.STOPBITS_ONE, parity = serial.PARITY_NONE, rtscts = False, dsrdtr =False, timeout = 0)
+QBO = Controller(ser)
+QBO.SetMouth(0x1b1f0e04)
 
-
-def makepicture():
-    cam = cv2.VideoCapture(int(config['camera']))
-    # 3 =  Enum for Picture Width
-    cam.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 320)  # I have found this to be about the highest-
-    cam.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 240)
-
-    if cam.isOpened():
-        _, frame = cam.read()
-        now = datetime.now()
-        file_name = now.strftime("%m_%d_%Y.%H_%M_%S") + ".jpg"
-        cam.release()
-        cv2.imwrite(file_name, frame)
+time.sleep(5)
+QBO.SetServo(1,511, 100)#Axis,Angle,Speed
+QBO.SetServo(2,450,100)#Axis,Angle,Speed
+time.sleep(5)
+QBO.SetServo(1,715, 100)#Axis,Angle,Speed
+time.sleep(5)
+QBO.SetServo(1,511, 100)#Axis,Angle,Speed
+time.sleep(5)
+QBO.SetServo(1,300, 100)#Axis,Angle,Speed
